@@ -1,13 +1,14 @@
 package reinforcementlearning;
 
 import java.io.*;
+import java.util.Arrays;
 
 /**
  *
  * @author Lizzie Herman
  */
 public class RaceTrack {
-    char track[][];
+    private char track[][];
     
     public RaceTrack(String filename){
         try {
@@ -29,21 +30,31 @@ public class RaceTrack {
         }
     }
     
-    public boolean cellSafe(int x, int y){
+    public char[][] getCopyOfTrack(){
+        char[][] copy = new char[track.length][track[0].length];
+        for(int i = 0; i < track.length; i++){
+            copy[i] = Arrays.copyOf(track[i], track[i].length);
+        }
+        return copy;
+    }
+    
+    public boolean cellSafe(int x, int y1){
+        int y = track.length - (1 + y1);
         try {
-            char cell = track[x][y];
-            if(cell == 'S' || cell == 'F' || cell == '.'){
-                return true;
+            char cell = track[y][x];
+            if(cell == '#'){
+                return false;
             }
-            return false;
+            return true;
         } catch(IndexOutOfBoundsException e){
             return false;
         }
     }
 
-    public char getCell(int x, int y){
+    public char getCell(int x, int y1){
+        int y = track.length - (1 + y1);
         try {
-            char cell = track[x][y];
+            char cell = track[y][x];
             switch(cell){
                 case 'S':
                     System.out.println("At the starting line");
@@ -64,8 +75,8 @@ public class RaceTrack {
             return cell;
         } catch(IndexOutOfBoundsException e){
             System.out.println("Went outside the grid");
+            return ' ';
         }
-        return ' ';
     }
     
     public int[] getSize(){

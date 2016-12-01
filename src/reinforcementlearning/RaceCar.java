@@ -7,10 +7,10 @@ import java.util.Random;
  * @author Lizzie Herman
  */
 public class RaceCar {
-    int xpos;
-    int ypos;
-    double xvel;
-    double yvel;
+    private int xpos;
+    private int ypos;
+    private double xvel;
+    private double yvel;
     
     public RaceCar(int x, int y){
         xpos = x;
@@ -58,6 +58,12 @@ public class RaceCar {
         ypos += (yvel * t);
         int[] pos = {xpos, ypos};
         return pos;
+    }
+    
+    public boolean accelNotWork(double xacc, double yacc, double t){
+        if(Math.abs(xacc) > 1 || Math.abs(yacc) > 1) return true;
+        if(Math.abs(xvel + (xacc * t)) > 5 || Math.abs(yvel + (yacc * t)) > 5) return true;
+        return false;
     }
 
 }

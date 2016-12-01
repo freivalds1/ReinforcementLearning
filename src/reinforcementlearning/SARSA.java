@@ -4,9 +4,9 @@ package reinforcementlearning;
  *
  * @author Lizzie Herman
  */
-public class ValueIteration extends Algorithm{
+public class SARSA extends Algorithm{
 
-    public ValueIteration(RaceTrack t, RaceCar c, TrackGUI g) {
+    public SARSA(RaceTrack t, RaceCar c, TrackGUI g) {
         super(t, c, g);
     }
     
@@ -17,5 +17,6 @@ public class ValueIteration extends Algorithm{
         
         return accl;
     }
+
 
 }
