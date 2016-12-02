@@ -24,7 +24,7 @@ public class TrackGUI extends JFrame{
     
     public void initPanels(){
         panel.setLayout(boardLayout);
-        for(int i = 0; i < track.length; i++){
+        for(int i = track.length-1; i >= 0 ; i--){
             for(int j = 0; j < track[i].length; j++){
                 JLabel label = new JLabel(Character.toString(track[i][j]));
                 label.setFont(new java.awt.Font("Monospaced", 0, 24));
@@ -34,15 +34,15 @@ public class TrackGUI extends JFrame{
         
         JPanel stats = new JPanel();
         stats.setLayout(new GridLayout(3, 2));
-        xPos.setText("X Position: ");
+        xPos.setText("   X Position: ");
         xPos.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18));
         yPos.setText("Y Position: ");
         yPos.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18));
-        xVel.setText("X Velocity: ");
+        xVel.setText("   X Velocity: ");
         xVel.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18));
         yVel.setText("Y Velocity: ");
-        xVel.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18));
-        time.setText("Time: ");
+        yVel.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18));
+        time.setText("   Time: ");
         time.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18));
         cost.setText("Cost: ");
         cost.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18));
@@ -59,23 +59,22 @@ public class TrackGUI extends JFrame{
     }
     
     public void updateTrack(int x, int y, double xv, double yv, double t, int c){
-        int y1 = track.length - (y+1);
         track[carPos[1]][carPos[0]] = oldChar;
-        oldChar = track[y1][x];
-        track[y1][x] = 'O';
+        oldChar = track[y][x];
+        track[y][x] = 'O';
         carPos[0] = x;
-        carPos[1] = y1;
+        carPos[1] = y;
         
-        xPos.setText("X Position: " + x);
+        xPos.setText("   X Position: " + x);
         yPos.setText("Y Position: " + y);
-        xVel.setText("X Velocity: " + xv);
+        xVel.setText("   X Velocity: " + xv);
         yVel.setText("Y Velocity: " + yv);
-        time.setText("Time: " + t);
+        time.setText("   Time: " + t);
         cost.setText("Cost: " + c);
         
         JPanel newPanel = new JPanel();
         newPanel.setLayout(boardLayout);
-        for(int i = 0; i < track.length; i++){
+        for(int i = track.length-1; i >= 0 ; i--){
             for(int j = 0; j < track[i].length; j++){
                 JLabel label = new JLabel(Character.toString(track[i][j]));
                 label.setFont(new java.awt.Font("Monospaced", 0, 24));

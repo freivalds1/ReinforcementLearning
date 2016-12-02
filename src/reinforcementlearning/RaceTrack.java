@@ -19,7 +19,7 @@ public class RaceTrack {
             int length = Integer.parseInt(dimensions[0]);
             int width = Integer.parseInt(dimensions[1]);
             track = new char[length][width];
-            for(int i = 0; i < length; i++){
+            for(int i = length-1; i >= 0; i--){
                 line = br.readLine();
                 track[i] = line.toCharArray();
             }
@@ -38,8 +38,7 @@ public class RaceTrack {
         return copy;
     }
     
-    public boolean cellSafe(int x, int y1){
-        int y = track.length - (1 + y1);
+    public boolean cellSafe(int x, int y){
         try {
             char cell = track[y][x];
             if(cell == '#'){
@@ -51,9 +50,7 @@ public class RaceTrack {
         }
     }
 
-    public boolean cellSafe(int x1, int cy1, int x2, int cy2){
-        int y1 = track.length - (1 + cy1);
-        int y2 = track.length - (1 + cy2);
+    public boolean crash(int x1, int y1, int x2, int y2){
         char cell;
         if(! cellSafe(x1,y1)){
             return false;
@@ -141,8 +138,7 @@ public class RaceTrack {
         }
     }
 
-    public char getCell(int x, int y1){
-        int y = track.length - (1 + y1);
+    public char getCell(int x, int y){
         try {
             char cell = track[y][x];
             switch(cell){

@@ -39,12 +39,13 @@ public class Algorithm {
             lastyp = car.getYPos();
             time += 1;
             car.accelerate(accl[0], accl[1], 1);
-            if(track.cellSafe(car.getXPos(), car.getYPos(), lastxp, lastyp)){
+            if(track.crash(car.getXPos(), car.getYPos(), lastxp, lastyp)){
                 if(track.getCell(car.getXPos(), car.getYPos()) == 'F'){
                     cost--;
                     finished = true;
                 }
             } else {
+                // car.setPos(lastxp, lastyp); car.setVel(0, 0);
                 if(hit){
                     hitWall();
                 } else {
