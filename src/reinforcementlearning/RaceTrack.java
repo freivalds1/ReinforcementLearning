@@ -120,13 +120,13 @@ public class RaceTrack {
                 for(int i = 0; i <= changex; i++){
                     yd += slope;
                     y = (int) yd;
-                    if(i != 0 && y-1 == (int)(yd-slope)){
+                    if(i != 0 && (y-1) == (int)(yd-slope) && !((y-1) < y1 && (y-1) < y2)){
                         cell = track[y-1][x+i];
                         if(cell == '#') return false;
                     }
                     cell = track[y][x+i];
                     if(cell == '#') return false;
-                    if(i != changex && y+1 == (int)(yd+slope)){
+                    if(i != changex && (y+1) == (int)(yd+slope) && !((y+1) > y1 && (y+1) > y2)){
                         cell = track[y+1][x+i];
                         if(cell == '#') return false;
                     }

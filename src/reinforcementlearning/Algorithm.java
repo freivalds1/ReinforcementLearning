@@ -70,50 +70,97 @@ public class Algorithm {
     // x1, y1 are position before crash, car is set to pos of crash
     public void hitWall(int x1, int y1){
         car.setVel(0, 0);
-        int x = car.getXPos();
-        int y = car.getYPos();
-        boolean jump = track.cellSafe(x, y);
-        if(y < y1){
-            for(; y <= y1; y++){
-                if(x < x1){
-                    for(; x <= x1; x++){
-                        if(jump) jump = track.cellSafe(x, y);
-                        if(!jump && track.cellSafe(x, y)){
-                            car.setPos(x, y);
-                            return;
-                        }
-                    }
-                } else {
-                    for(; x >= x1; x--){
-                        if(jump) jump = track.cellSafe(x, y);
-                        if(!jump && track.cellSafe(x, y)){
-                            car.setPos(x, y);
-                            return;
-                        }
-                    }
+        int x2 = car.getXPos();
+        int y2 = car.getYPos();
+        int lastx = orgPos[0];
+        int lasty = orgPos[1];
+        int changex = Math.abs(x1-x2);
+        int changey = Math.abs(y1-y2);
+        int x,y;
+        if(changex == 0){
+            lastx = x1;
+            if(y1<y2){
+                for(; y1 < y2; y1++){
+                    if(track.cellSafe(lastx, y1)) lasty = y1;
+                    else break;
+                }
+            } else {
+                for(; y1 > y2; y1--){
+                    if(track.cellSafe(lastx, y1)) lasty = y1;
+                    else break;
+                    
                 }
             }
+            //System.out.println("horizontal: " + x2 + " " + y2);
+        } else if(changey == 0){
+            lasty = y1;
+            if(x1<x2){
+                for(; x1 < x2; x1++){
+                    if(track.cellSafe(x1, lasty)) lastx = x1;
+                    else break;
+                }
+            } else {
+                for(; x1 > x2; x1--){
+                    if(track.cellSafe(x1, lasty)) lastx = x1;
+                    else break;
+                    
+                }
+            }
+            //System.out.println("vertical: " + x2 + " " + y2);
         } else {
-            for(; y >= y1; y--){
-                if(x < x1){
-                    for(; x <= x1; x++){
-                        if(jump) jump = track.cellSafe(x, y);
-                        if(!jump && track.cellSafe(x, y)){
-                            car.setPos(x, y);
-                            return;
-                        }
+            double slope = changey / changex;
+            double yd;
+            y = y1;
+            yd = y1;
+            x = x1;
+            if(x1<x2){
+                for(; x < x2; x++){
+                    if(y1<y2) yd += slope;
+                    else yd -= slope;
+                    y = (int) yd;
+                    if(!((y-1) < y1 && (y-1) < y2) && (y-1) == (int)(yd-slope)){
+                        if(track.cellSafe(x, y-1)){
+                            lastx = x;
+                            lasty = y-1;
+                        } else break;
                     }
-                } else {
-                    for(; x >= x1; x--){
-                        if(jump) jump = track.cellSafe(x, y);
-                        if(!jump && track.cellSafe(x, y)){
-                            car.setPos(x, y);
-                            return;
-                        }
+                    if(track.cellSafe(x, y)){
+                        lastx = x;
+                        lasty = y;
+                    } else break;
+                    if(!((y+1) > y1 && (y+1) > y2) && (y+1) == (int)(yd+slope)){
+                        if(track.cellSafe(x, y+1)){
+                            lastx = x;
+                            lasty = y+1;
+                        } else break;
+                    }
+                }
+            } else {
+                for(; x > x2; x--){
+                    if(y1<y2) yd += slope;
+                    else yd -= slope;
+                    y = (int) yd;
+                    if(!((y-1) < y1 && (y-1) < y2) && (y-1) == (int)(yd-slope)){
+                        if(track.cellSafe(x, y-1)){
+                            lastx = x;
+                            lasty = y-1;
+                        } else break;
+                    }
+                    if(track.cellSafe(x, y)){
+                        lastx = x;
+                        lasty = y;
+                    } else break;
+                    if(!((y+1) > y1 && (y+1) > y2) && (y+1) == (int)(yd+slope)){
+                        if(track.cellSafe(x, y+1)){
+                            lastx = x;
+                            lasty = y+1;
+                        } else break;
                     }
                 }
             }
+            //System.out.println("slope: " + x2 + " " + y2);
         }
+        car.setPos(lastx, lasty);
     }
     
     public int getCost(){
