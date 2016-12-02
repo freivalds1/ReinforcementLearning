@@ -7,12 +7,13 @@ import java.util.Random;
  * @author Lizzie Herman
  */
 public class Algorithm {
-    private RaceTrack track;
-    private RaceCar car;
+    protected RaceTrack track;
+    protected RaceCar car;
     private double time;
     private int cost;
     private TrackGUI gui;
     private int[] orgPos;
+    protected Random random;
     
     public Algorithm(RaceTrack t, RaceCar c, TrackGUI g){
         track = t;
@@ -23,6 +24,7 @@ public class Algorithm {
         orgPos = new int[2];
         orgPos[0] = car.getXPos();
         orgPos[1] = car.getYPos();
+        random = new Random();
     }
     
     public void runCar(boolean hit){
@@ -124,7 +126,6 @@ public class Algorithm {
     // this method returns a double array of accel it wants to do
     // this is the method we need to change
     public double[] findNextMove(){
-        Random random = new Random();
         double x = (random.nextInt(2)-random.nextDouble());
         double y = (random.nextInt(2)-random.nextDouble());
         double[] accl = {x,y};

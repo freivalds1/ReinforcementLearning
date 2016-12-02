@@ -83,8 +83,9 @@ public class TrackGUI extends JFrame{
             }
         }
         this.remove(panel);
+        this.add(newPanel, BorderLayout.NORTH);
+        panel.removeAll();
         panel = newPanel;
-        this.add(panel, BorderLayout.NORTH);
     }
     
     public char getLastChar(){
