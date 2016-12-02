@@ -14,7 +14,7 @@ public class ReinforcementLearning {
      */
     public static void main(String[] args) {
         char[] letters = {'L','O','R'};
-        char letter = 'L';
+        char letter = 'O';
         String filename;
         switch(letter){
             case 'L':
@@ -60,7 +60,8 @@ public class ReinforcementLearning {
         Algorithm alg = new Algorithm(track,car,gui);
         // Algorithm alg = new ValueIteration(track,car,gui);
         // Algorithm alg = new SARSA(track,car,gui);
-        alg.runCar();
+        //alg.runCar(true);       // sends car to original position
+        alg.runCar(false);    // sends car to the closest track position from crash site
         gui.updateTrack(car.getXPos(), car.getYPos(), car.getXVel(), car.getYVel(), alg.getTime(), alg.getCost());
         switch(letter){
             case 'L':
