@@ -32,7 +32,7 @@ public class Algorithm {
         int lastxp, lastyp;
         while(! finished){
             gui.updateTrack(car.getXPos(), car.getYPos(), car.getXVel(), car.getYVel(), time, cost);
-            double[] accl = findNextMove();
+            int[] accl = findNextMove();
             if(car.accelNotWork(accl[0], accl[1], 1)) continue;
             cost++;
             lastxp = car.getXPos();
@@ -173,10 +173,10 @@ public class Algorithm {
     
     // this method returns a double array of accel it wants to do
     // this is the method we need to change
-    public double[] findNextMove(){
-        double x = (random.nextInt(2)-random.nextDouble());
-        double y = (random.nextInt(2)-random.nextDouble());
-        double[] accl = {x,y};
+    public int[] findNextMove(){
+        int x = (random.nextInt(2)-random.nextInt(2));
+        int y = (random.nextInt(2)-random.nextInt(2));
+        int[] accl = {x,y};
         return accl;
     }
     

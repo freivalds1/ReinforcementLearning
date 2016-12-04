@@ -13,91 +13,94 @@ public class ReinforcementLearning {
      */
     public static void main(String[] args) {
         //loop through different tracks
-        char[] letters = {'L', 'O', 'R'};
-        //char letter = 'O';
+        char[] letters = {'O'};//, 'O', 'R'};
+        //char letter = 'R';
         int i = 1;
         boolean notStart = true;
         for(char letter : letters){
-        //while(i < 10){
-            String filename;
-            switch(letter){
-                case 'L':
-                    filename = "L-track.txt";
-                    System.out.println(filename);
-                    break;
-                case 'O':
-                    filename = "O-track.txt";
-                    System.out.println(filename);
-                    break;
-                case 'R':
-                    filename = "R-track.txt";
-                    System.out.println(filename);
-                    break;
-                default:
-                    filename = "";
+            while(i <= 1){
+                String filename;
+                switch(letter){
+                    case 'L':
+                        filename = "L-track.txt";
+                        System.out.println(filename);
+                        break;
+                    case 'O':
+                        filename = "O-track.txt";
+                        System.out.println(filename);
+                        break;
+                    case 'R':
+                        filename = "R-track.txt";
+                        System.out.println(filename);
+                        break;
+                    default:
+                        filename = "";
+                }
+                RaceTrack track = new RaceTrack(filename);
+                // create gui to show what is happening
+                TrackGUI gui = new TrackGUI(track.getCopyOfTrack(), letter);
+                gui.pack();
+                gui.setVisible(true);
+                boolean safe = true;
+                int x = 0,y = 0;
+                Random random = new Random();
+                int pos[];
+                // choose which starting position you want the car to have
+                switch("start"){
+                    case "start":
+                        ArrayList<int[]> start = track.getStart();
+                        int j = random.nextInt(start.size());
+                        pos = start.get(j);
+                        x = pos[0]; y = pos[1];
+                        gui.updateTrack(x, y, 0, 0, 0, 0);
+                        break;
+                    case "final":                       
+                        pos = track.getNextStepBackFromFinish(i);
+                        x = pos[0]; y = pos[1];
+                        gui.updateTrack(x, y, 0, 0, 0, 0);
+                        //System.out.println(i);
+                        notStart = (track.getCell(x, y) != 'S');
+                        i++;
+                        break;
+                    default:
+                        int[] size = track.getSize();
+                        do{
+                            x = random.nextInt(size[1]);
+                            y = size[0] - (1 + random.nextInt(size[0]));
+                            safe = track.cellSafe(x, y);
+                        } while(! safe);
+                        gui.updateTrack(x, y, 0, 0, 0, 0);
+                        break;
+                }
+
+                RaceCar car = new RaceCar(x,y);
+                Algorithm algorithm;
+                // choose which algorithm to run
+                switch('a'){
+                    case 'v':
+                        algorithm = new ValueIteration(track,car,gui);
+                        break;
+                    case 's':
+                        algorithm = new SARSA(track,car,gui,0.2);
+                        break;
+                    default:
+                        algorithm = new Algorithm(track,car,gui);
+                        break;
+                }
+                // choose which crash action happens
+                // true sends car to original position
+                // false sends car to the closest track position from crash site
+                boolean crash = true;
+
+                // run algorithm
+                algorithm.runCar(crash);
+
+                gui.updateTrack(car.getXPos(), car.getYPos(), car.getXVel(), car.getYVel(), algorithm.getTime(), algorithm.getCost());
+                System.out.println(algorithm.toString());
+                //gui.dispose();
+                i++;
             }
-            RaceTrack track = new RaceTrack(filename);
-            // create gui to show what is happening
-            TrackGUI gui = new TrackGUI(track.getCopyOfTrack(), letter);
-            gui.pack();
-            gui.setVisible(true);
-            boolean safe = true;
-            int x = 0,y = 0;
-            Random random = new Random();
-            int pos[];
-            // choose which starting position you want the car to have
-            switch("start"){
-                case "start":
-                    ArrayList<int[]> start = track.getStart();
-                    int j = random.nextInt(start.size());
-                    pos = start.get(j);
-                    x = pos[0]; y = pos[1];
-                    gui.updateTrack(x, y, 0, 0, 0, 0);
-                    break;
-                case "final":
-                    pos = track.getNextStepBackFromFinish(i);
-                    x = pos[0]; y = pos[1];
-                    gui.updateTrack(x, y, 0, 0, 0, 0);
-                    //System.out.println(i);
-                    notStart = (track.getCell(x, y) != 'S');
-                    break;
-                default:
-                    int[] size = track.getSize();
-                    do{
-                        x = random.nextInt(size[1]);
-                        y = size[0] - (1 + random.nextInt(size[0]));
-                        safe = track.cellSafe(x, y);
-                    } while(! safe);
-                    gui.updateTrack(x, y, 0, 0, 0, 0);
-                    break;
-            }
-            
-            RaceCar car = new RaceCar(x,y);
-            Algorithm algorithm;
-            // choose which algorithm to run
-            switch('a'){
-                case 'v':
-                    algorithm = new ValueIteration(track,car,gui);
-                    break;
-                case 's':
-                    algorithm = new SARSA(track,car,gui,0.2);
-                    break;
-                default:
-                    algorithm = new Algorithm(track,car,gui);
-                    break;
-            }
-            // choose which crash action happens
-            // true sends car to original position
-            // false sends car to the closest track position from crash site
-            boolean crash = true;
-            
-            // run algorithm
-            algorithm.runCar(crash);
-            
-            gui.updateTrack(car.getXPos(), car.getYPos(), car.getXVel(), car.getYVel(), algorithm.getTime(), algorithm.getCost());
-            gui.dispose();
-            System.out.println(algorithm.toString());
-            i++;
+            i = 1;
         }
     }
 }

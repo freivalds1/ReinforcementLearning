@@ -10,8 +10,8 @@ public class ValueIteration extends Algorithm{
         super(t, c, g);
     }
     
-    public double[] findNextMove(){
-        double[] accl = {0,0};
+    public int[] findNextMove(){
+        int[] accl = {0,0};
         
         // TO-DO implement algorithm
         

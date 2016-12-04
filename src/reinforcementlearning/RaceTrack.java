@@ -98,25 +98,6 @@ public class RaceTrack {
                         if(cell == '#') return false;
                     }
                 }
-            } else if(Math.abs(x1-x2) == Math.abs(y1-y2)){
-                int change = Math.abs(x1-x2);
-                int x,y;
-                if(x1<x2) x = x1;
-                else x = x2;
-                if(y1<y2) y = y1; 
-                else y = y2;
-                for(int i = 0; i <= change; i++){
-                    if(i != 0){
-                        cell = track[y+i-1][x+i];
-                        if(cell == '#') return false;
-                    }
-                    cell = track[y+i][x+i];
-                    if(cell == '#') return false;
-                    if(i != change){
-                        cell = track[y+i+1][x+i];
-                        if(cell == '#') return false;
-                    }
-                }
             } else {
                 int changex = Math.abs(x1-x2);
                 int changey = Math.abs(y1-y2);
@@ -220,6 +201,12 @@ public class RaceTrack {
         pos[1] = y - (5 + num);
         steps -= (5 + num);
         pos[0] = x - steps;
+        try {
+            if(! cellSafe(pos[0], pos[1])) pos = start.get(num);
+        } catch(IndexOutOfBoundsException e){
+            pos = start.get(num);
+        }
+            
         return pos;
     }
     
@@ -297,6 +284,7 @@ public class RaceTrack {
         if(steps <= 5){ pos[0] = x; pos[1] = y - steps; return pos;}
         y -= 5; steps -= 5;
         pos[0] = x; pos[1] = y;
+        
         return pos;
     }
     

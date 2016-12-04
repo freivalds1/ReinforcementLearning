@@ -9,8 +9,8 @@ import java.util.Random;
 public class RaceCar {
     private int xpos;
     private int ypos;
-    private double xvel;
-    private double yvel;
+    private int xvel;
+    private int yvel;
     
     public RaceCar(int x, int y){
         xpos = x;
@@ -27,11 +27,11 @@ public class RaceCar {
         return ypos;
     }
 
-    public double getXVel(){
+    public int getXVel(){
         return xvel;
     }
 
-    public double getYVel(){
+    public int getYVel(){
         return yvel;
     }
     
@@ -40,13 +40,13 @@ public class RaceCar {
         ypos = y;
     }
     
-    public void setVel(double x, double y){
+    public void setVel(int x, int y){
         xvel = x;
         yvel = y;
     }
     
     // t is the amount of time that happened during that step not total elapsed time
-    public int[] accelerate(double xacc, double yacc, double t){
+    public int[] accelerate(int xacc, int yacc, double t){
         Random random = new Random();
         double accelerate = random.nextDouble();
         // 80% chance of actually accelerating
@@ -60,7 +60,7 @@ public class RaceCar {
         return pos;
     }
     
-    public boolean accelNotWork(double xacc, double yacc, double t){
+    public boolean accelNotWork(int xacc, int yacc, int t){
         if(Math.abs(xacc) > 1 || Math.abs(yacc) > 1) return true;
         if(Math.abs(xvel + (xacc * t)) > 5 || Math.abs(yvel + (yacc * t)) > 5) return true;
         return false;

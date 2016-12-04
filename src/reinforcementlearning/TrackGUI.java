@@ -61,9 +61,9 @@ public class TrackGUI extends JFrame{
         this.add(stats, BorderLayout.SOUTH);
     }
     
-    public void updateTrack(int x, int y, double xv, double yv, double t, int c){
-        //track[carPos[1]][carPos[0]] = '*';
-        track[carPos[1]][carPos[0]] = oldChar;
+    public void updateTrack(int x, int y, int xv, int yv, double t, int c){
+        track[carPos[1]][carPos[0]] = Integer.toString(i%10).charAt(0);
+        //track[carPos[1]][carPos[0]] = oldChar;
         oldChar = track[y][x];
         track[y][x] = 'O';
         carPos[0] = x;
