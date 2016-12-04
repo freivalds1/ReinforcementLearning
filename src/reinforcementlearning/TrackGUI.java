@@ -12,8 +12,11 @@ public class TrackGUI extends JFrame{
     private char[][] track;
     private int[] carPos = {0,0};
     private char oldChar = '#';
+    int i = 0;
+    char name;
     
-    public TrackGUI(char[][] board){
+    public TrackGUI(char[][] board, char n){
+        name = n;
         //setSize(new Dimension(900,600));
         boardLayout = new GridLayout(board.length, board[0].length);
         track = board;
@@ -59,6 +62,7 @@ public class TrackGUI extends JFrame{
     }
     
     public void updateTrack(int x, int y, double xv, double yv, double t, int c){
+        //track[carPos[1]][carPos[0]] = '*';
         track[carPos[1]][carPos[0]] = oldChar;
         oldChar = track[y][x];
         track[y][x] = 'O';
@@ -85,6 +89,18 @@ public class TrackGUI extends JFrame{
         this.add(newPanel, BorderLayout.NORTH);
         panel.removeAll();
         panel = newPanel;
+        switch(name){
+            case 'L':
+                setSize(800, 499+(i%2));
+                break;
+            case 'O':
+                setSize(800, 959+(i%2));
+                break;
+            case 'R':
+                setSize(800, 1054+(i%2));
+                break;
+        }
+        i++;
     }
     
     public char getLastChar(){

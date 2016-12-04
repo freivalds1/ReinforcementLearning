@@ -25,5 +25,7 @@ public class SARSA extends Algorithm{
         return accl;
     }
 
-
+    public String toString(){
+        return "SARSA " + super.toString();
+    }
 }

@@ -18,16 +18,16 @@ public class Algorithm {
     public Algorithm(RaceTrack t, RaceCar c, TrackGUI g){
         track = t;
         car = c;
-        time = 0;
-        cost = 0;
         gui = g;
         orgPos = new int[2];
-        orgPos[0] = car.getXPos();
-        orgPos[1] = car.getYPos();
         random = new Random();
     }
     
     public void runCar(boolean hit){
+        time = 0;
+        cost = 0;
+        orgPos[0] = car.getXPos();
+        orgPos[1] = car.getYPos();
         boolean finished = false;
         int lastxp, lastyp;
         while(! finished){
@@ -179,5 +179,8 @@ public class Algorithm {
         double[] accl = {x,y};
         return accl;
     }
-
+    
+    public String toString(){
+        return "Algorithm\nOriginal Position: (" + orgPos[0] + "," + orgPos[1] + ") Cost of Trial: " + cost + " Time of Trial: " + time;
+    }
 }

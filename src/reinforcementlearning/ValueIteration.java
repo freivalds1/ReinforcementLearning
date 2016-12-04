@@ -17,5 +17,8 @@ public class ValueIteration extends Algorithm{
         
         return accl;
     }
-
+    
+    public String toString(){
+        return "Value Iteration " + super.toString();
+    }
 }
