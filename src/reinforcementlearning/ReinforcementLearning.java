@@ -18,7 +18,7 @@ public class ReinforcementLearning {
         int i = 1;
         boolean notStart = true;
         for(char letter : letters){
-            while(i <= 1){
+            while(i <= 10){
                 String filename;
                 switch(letter){
                     case 'L':
@@ -97,7 +97,7 @@ public class ReinforcementLearning {
 
                 gui.updateTrack(car.getXPos(), car.getYPos(), car.getXVel(), car.getYVel(), algorithm.getTime(), algorithm.getCost());
                 System.out.println(algorithm.toString());
-                //gui.dispose();
+                gui.dispose();
                 i++;
             }
             i = 1;

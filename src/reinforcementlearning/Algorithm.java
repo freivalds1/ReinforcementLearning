@@ -39,8 +39,10 @@ public class Algorithm {
             lastyp = car.getYPos();
             time += 1;
             car.accelerate(accl[0], accl[1], 1);
-            if(track.crash(car.getXPos(), car.getYPos(), lastxp, lastyp)){
+            if(track.notCrash(car.getXPos(), car.getYPos(), lastxp, lastyp)){
                 if(track.getCell(car.getXPos(), car.getYPos()) == 'F'){
+                    System.out.println("last position: (" + lastxp + "," + lastyp + ")");
+                    System.out.println("final position: (" + car.getXPos() + "," + car.getYPos() + ")");
                     cost--;
                     finished = true;
                 }
